@@ -5,7 +5,7 @@ from predictor import predict
 app = Flask(__name__)
 api = Api(app)
 
-class ClassifierEngine(Resource):
+class PredictorEngine(Resource):
     @app.route('/predict', methods=['GET'])
     def get(self):
         parser = reqparse.RequestParser()
@@ -14,7 +14,7 @@ class ClassifierEngine(Resource):
         args = parser.parse_args()
         return predict(args['text1'], args['text2'])
 
-api.add_resource(ClassifierEngine, '/')
+api.add_resource(PredictorEngine, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)
