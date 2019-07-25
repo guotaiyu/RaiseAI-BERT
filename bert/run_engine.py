@@ -1,11 +1,11 @@
-from prediction import predict, tokenizer, label_list, estimator
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
+from predictor import predict, label_list, tokenizer
 
 app = Flask(__name__)
 api = Api(app)
 
-class EntailmentEngine(Resource):
+class ClassifierEngine(Resource):
     @app.route('/predict', methods=['GET'])
     def get(self):
         parser = reqparse.RequestParser()
@@ -14,7 +14,7 @@ class EntailmentEngine(Resource):
         args = parser.parse_args()
         return predict(args['text1'], args['text2'])
 
-api.add_resource(EntailmentEngine, '/')
+api.add_resource(ClassifierEngine, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)
