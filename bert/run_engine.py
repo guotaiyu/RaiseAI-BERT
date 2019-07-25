@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-from predictor import predict, label_list, tokenizer
+from predictor import predict, tokenizer
 
 app = Flask(__name__)
 api = Api(app)

@@ -9,8 +9,6 @@ import requests
 max_seq_length = 128
 vocab_file = 'vocab.txt'
 tf_serving_url = 'http://localhost:9000/v1/models/bert:predict'
-
-global label_list
 label_list = ["contradiction", "entailment", "neutral"]
 
 global tokenizer
