@@ -11,7 +11,6 @@ vocab_file = 'vocab.txt'
 tf_serving_url = 'http://localhost:9000/v1/models/bert:predict'
 label_list = ["contradiction", "entailment", "neutral"]
 
-global tokenizer
 tokenizer = tokenization.FullTokenizer(vocab_file=vocab_file, do_lower_case=True)
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.INFO)
