@@ -16,10 +16,10 @@ Raise-BERT/
             └── variables.index
 ```
 
-## Serve the fine-tuned model using tensorflow serving
+## Serve the fine-tuned bert model using tensorflow serving
 Follow the instruction [here](https://www.tensorflow.org/tfx/serving/setup) to install ```tensorflow-model-server```
 
-Download fine-tuned model from [here](https://drive.google.com/drive/folders/1Lsieg1PMLYZKjbncQfnwaZqcd04_Sev_?usp=sharing)
+Download fine-tuned bert model from [here](https://drive.google.com/drive/folders/1Lsieg1PMLYZKjbncQfnwaZqcd04_Sev_?usp=sharing) and save it to ```model``` directory
 
 Show signatures of the model:
 ```
@@ -61,13 +61,13 @@ Serve the model:
 tensorflow_model_server --rest_api_port=9000 --model_name=bert --model_base_path=Raise-BERT/model
 ```
 
-## Bring up service
-Open a separate terminal, in ```bert``` directory, run:
+## Bring up Flask application
+Open a separate terminal and in ```bert``` directory, run:
 ```
 python run_engine.py
 ```
 
-Open another terminal window and run:
+Open another terminal and run:
 ```
 curl -i "http://127.0.0.1:5000?text1=Sally+is+a+male&text2=Sally+is+a+man"
 ```
