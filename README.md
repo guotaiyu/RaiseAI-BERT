@@ -2,16 +2,17 @@
 ```
 Raise-BERT/
 ├── README.md
-├── bert
-│   ├── inputprocessor.py
-│   ├── predictor.py
-│   ├── run_engine.py
-│   ├── tokenization.py
-│   ├── vocab.txt
+└── bert
+    ├── inputprocessor.py
+    ├── predictor.py
+    ├── run_engine.py
+    ├── tokenization.py
+    └── vocab.txt
 
 ```
 
 ## Bring up service
+Go to ```bert``` directory
 ```
 cd bert
 ```
