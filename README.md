@@ -2,7 +2,7 @@
 ```
 Raise-BERT/
 ├── README.md
-└── bert/
+├── bert/
 │   ├── inputprocessor.py
 │   ├── predictor.py
 │   ├── run_engine.py
