@@ -1,7 +1,7 @@
 class InputExample(object):
   """A single training/test example for simple sequence classification."""
 
-  def __init__(self, guid, text_a, text_b=None, label=None):
+  def __init__(self, text_a, text_b=None, label=None, guid=None):
     """Constructs a InputExample.
     Args:
       guid: Unique id for the example.
