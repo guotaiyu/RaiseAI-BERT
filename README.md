@@ -7,10 +7,10 @@ Raise-BERT/
 │   ├── inputprocessor.py
 │   ├── predictor.py
 │   ├── run_engine.py
-│   ├── tokenization.py
-│   └── vocab.txt
+│   └── tokenization.py
 └── model/
-    └── 1/ (version #)
+    └── 1/                  # version no.
+        ├── vocab.txt
         ├── saved_model.pb
         └── variables/
             ├── variables.data-00000-of-00001
@@ -22,40 +22,6 @@ Follow the instruction [here](https://www.tensorflow.org/tfx/serving/setup) to i
 
 Download fine-tuned bert model from [here](https://drive.google.com/drive/folders/1Lsieg1PMLYZKjbncQfnwaZqcd04_Sev_?usp=sharing) and save it to ```model``` directory
 
-Show signatures of the model:
-```
-saved_model_cli show --dir Raise-BERT/model/1 --all
-```
-```
-****
-MetaGraphDef with tag-set: 'serve' contains the following SignatureDefs:
-
-signature_def['serving_default']:
-  The given SavedModel SignatureDef contains the following input(s):
-    inputs['input_ids'] tensor_info:
-        dtype: DT_INT32
-        shape: (1, 128)
-        name: input_ids:0
-    inputs['input_mask'] tensor_info:
-        dtype: DT_INT32
-        shape: (1, 128)
-        name: input_mask:0
-    inputs['label_ids'] tensor_info:
-        dtype: DT_INT32
-        shape: (1)
-        name: label_ids:0
-    inputs['segment_ids'] tensor_info:
-        dtype: DT_INT32
-        shape: (1, 128)
-        name: segment_ids:0
-  The given SavedModel SignatureDef contains the following output(s):
-    outputs['probabilities'] tensor_info:
-        dtype: DT_FLOAT
-        shape: (1, 3)
-        name: loss/Softmax:0
-  Method name is: tensorflow/serving/predict
-****
-```
 
 Serve the model:
 ```
@@ -70,9 +36,9 @@ I tensorflow_serving/model_servers/server.cc:344] Exporting HTTP/REST API at:loc
 ```
 
 ## Bring up Flask application
-Open a separate terminal and in ```bert``` directory, run:
+Open a separate terminal and in root directory, run:
 ```
-python run_engine.py
+./run_engine
 ```
 ```
 ****

@@ -1,13 +1,13 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from inputprocessor import InputExample, PaddingInputExample, InputFeatures
-import tokenization
+from bert.inputprocessor import InputExample, PaddingInputExample, InputFeatures
+import bert.tokenization as tokenization
 import tensorflow as tf
 import requests
 
 max_seq_length = 128
-vocab_file = 'vocab.txt'
+vocab_file = 'model/vocab.txt'
 tf_serving_url = 'http://localhost:9000/v1/models/bert:predict'
 label_list = ["contradiction", "entailment", "neutral"]
 

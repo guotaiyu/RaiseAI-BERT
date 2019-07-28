@@ -1,11 +1,13 @@
+#!/usr/bin/env python3
+
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-from predictor import predict
+from bert.predictor import predict
 
 app = Flask(__name__)
 api = Api(app)
 
-class PredictorEngine(Resource):
+class EntailmentEngine(Resource):
     @app.route('/predict', methods=['GET'])
     def get(self):
         parser = reqparse.RequestParser()
@@ -14,7 +16,7 @@ class PredictorEngine(Resource):
         args = parser.parse_args()
         return predict(args['text1'], args['text2'])
 
-api.add_resource(PredictorEngine, '/')
+api.add_resource(EntailmentEngine, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)
