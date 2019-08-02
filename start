@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+from flask import Flask
+from flask_restful import Resource, Api, reqparse
+from bert.predictor import predict
+
+app = Flask(__name__)
+api = Api(app)
+
+class EntailmentEngine(Resource):
+    @app.route('/predict', methods=['GET'])
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('text', type=str, required=True, help='text cannot be empty')
+        parser.add_argument('hypo', type=str, required=True, help='hypo cannot be empty')
+        args = parser.parse_args()
+        return predict(args['text'], args['hypo'])
+    @app.route('/ping')
+    def ping():
+        return 'OK'
+api.add_resource(EntailmentEngine, '/')
+
+if __name__ == '__main__':
+    app.run(debug=True, threaded=True)
