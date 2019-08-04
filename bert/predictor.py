@@ -124,9 +124,6 @@ def convert_single_example(example, label_list, max_seq_length, tokenizer):
 
 def predict(text, hypo):
 
-  tf.compat.v1.logging.info("*** Input ***")
-  tf.compat.v1.logging.info("{\'text\': ["+text+"], \'hypo\': ["+hypo+"]}")
-
   #1 create input example from text and hypo
   input_example = InputExample(text_a=text, text_b=hypo)
 
@@ -141,6 +138,8 @@ def predict(text, hypo):
 
   res = dict(zip(label_list, response["outputs"][0]))
   
+  tf.compat.v1.logging.info("*** Input ***")
+  tf.compat.v1.logging.info("{\'text\': ["+text+"], \'hypo\': ["+hypo+"]}")
   tf.compat.v1.logging.info("*** Output ***") 
   tf.compat.v1.logging.info(res)
   
