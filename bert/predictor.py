@@ -142,11 +142,11 @@ def predict(text, hypo):
   #4 receive response from tensorflow serving with fine-tuned bert model
   response = requests.post(tf_serving_url, json={"inputs": input_dict}).json()
 
-  res = dict(zip(label_list, response["outputs"][0]))
+  result = dict(zip(label_list, response["outputs"][0]))
   
   tf.compat.v1.logging.info("*** Input ***")
   tf.compat.v1.logging.info("{\'text\': ["+text+"], \'hypo\': ["+hypo+"]}")
   tf.compat.v1.logging.info("*** Output ***") 
-  tf.compat.v1.logging.info(res)
+  tf.compat.v1.logging.info(result)
   
-  return res
+  return result
