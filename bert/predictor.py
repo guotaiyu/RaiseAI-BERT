@@ -1,10 +1,16 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from bert.inputprocessor import InputExample, PaddingInputExample, InputFeatures
-import bert.tokenization as tokenization
+
 import tensorflow as tf
 import requests
+import time
+from cachetools import TTLCache, cached
+
+from bert.inputprocessor import InputExample, PaddingInputExample, InputFeatures
+import bert.tokenization as tokenization
+
+cache = TTLCache(maxsize=16384, ttl=86400, timer=time.time)
 
 max_seq_length = 128
 vocab_file = 'model/vocab.txt'
@@ -113,9 +119,6 @@ def convert_single_example(example, label_list, max_seq_length, tokenizer):
   assert len(input_mask) == max_seq_length
   assert len(segment_ids) == max_seq_length
 
-  tf.compat.v1.logging.info("*** Input ***")
-  tf.compat.v1.logging.info("tokens: %s" % " ".join([tokenization.printable_text(x) for x in tokens]))
-
   feature = InputFeatures(
       input_ids=input_ids,
       input_mask=input_mask,
@@ -124,12 +127,12 @@ def convert_single_example(example, label_list, max_seq_length, tokenizer):
       is_real_example=True)
   return feature
 
-
+@cached(cache)
 def predict(text, hypo):
-  
+
   #1 create input example from text and hypo
   input_example = InputExample(text_a=text, text_b=hypo)
-    
+
   #2 create input features from input example
   input_features = convert_single_example(input_example, label_list, max_seq_length, tokenizer)
 
@@ -139,7 +142,11 @@ def predict(text, hypo):
   #4 receive response from tensorflow serving with fine-tuned bert model
   response = requests.post(tf_serving_url, json={"inputs": input_dict}).json()
 
-  tf.compat.v1.logging.info("*** Output ***") 
-  tf.compat.v1.logging.info(response)
+  result = dict(zip(label_list, response["outputs"][0]))
   
-  return dict(zip(label_list, response["outputs"][0]))
+  tf.compat.v1.logging.info("*** Input ***")
+  tf.compat.v1.logging.info("{\'text\': ["+text+"], \'hypo\': ["+hypo+"]}")
+  tf.compat.v1.logging.info("*** Output ***") 
+  tf.compat.v1.logging.info(result)
+  
+  return result
