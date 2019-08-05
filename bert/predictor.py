@@ -1,10 +1,16 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from bert.inputprocessor import InputExample, PaddingInputExample, InputFeatures
-import bert.tokenization as tokenization
+
 import tensorflow as tf
 import requests
+import time
+from cachetools import TTLCache, cached
+
+from bert.inputprocessor import InputExample, PaddingInputExample, InputFeatures
+import bert.tokenization as tokenization
+
+cache = TTLCache(maxsize=16384, ttl=86400, timer=time.time)
 
 max_seq_length = 128
 vocab_file = 'model/vocab.txt'
@@ -121,7 +127,7 @@ def convert_single_example(example, label_list, max_seq_length, tokenizer):
       is_real_example=True)
   return feature
 
-
+@cached(cache)
 def predict(text, hypo):
 
   #1 create input example from text and hypo
